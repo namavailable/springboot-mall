@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class ProductController {
@@ -44,5 +45,16 @@ public class ProductController {
         productService.updateProduct(productId, productRequest);
         Product updatedProduct = productService.getProductById(productId);
         return ResponseEntity.status(HttpStatus.OK).body(updatedProduct);
+    }
+    @DeleteMapping("/products/{productId}")
+    public ResponseEntity deleteProductById(@PathVariable Integer productId) {
+        productService.deleteProductById(productId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/products")
+    public ResponseEntity<List<Product>> getProduct() {
+        List<Product> productList=productService.getProducts();
+        return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
 }
